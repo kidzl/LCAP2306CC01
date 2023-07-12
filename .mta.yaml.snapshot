@@ -22,6 +22,58 @@ build-parameters:
         - bash -c "export PATH=$PATH:$(pwd)/node_modules/.bin"
         - cds build --production
 modules:
+  - name: zlProject0712-MDKAPP
+    type: html5
+    path: app/MDKAPP
+    build-parameters:
+      builder: custom
+      commands:
+        - npx -p @sap/mdk-tools mdk build --target module --ui5 --forceUpdate
+        - bash -c "cd Web/MDKModule && rm -rf .npmrc && npm install"
+        - bash -c "cd Web/MDKModule && npm run build"
+        - >-
+          bash -c "mv Web/MDKModule/MDKModule-content.zip
+          ../../build/dist/MDKAPP.zip"
+        - rm -rf Web/MDKModule/dist
+      _artifactName: MDKAPP.zip
+      supported-platforms: []
+      build-result: ../../build/dist
+  - name: zlProject0712-zlProject0712.FioriApp
+    type: html5
+    path: app/zlProject0712.FioriApp
+    build-parameters:
+      builder: custom
+      commands:
+        - rm -rf dist-zip dist
+        - >-
+          npx -p @ui5/cli@^3.0.0 ui5 build --dest dist
+          --include-task=generateManifestBundle
+          --include-task=generateCachebusterInfo
+        - mkdir dist-zip
+        - >-
+          bash -c "cd dist && npx bestzip ../dist-zip/zlProject0712FioriApp.zip
+          *"
+      _artifactName: zlProject0712FioriApp.zip
+      supported-platforms: []
+      build-result: dist-zip
+  - name: zlProject0712-zlProject0712.MyApplicationFiori
+    type: html5
+    path: app/zlProject0712.MyApplicationFiori
+    build-parameters:
+      builder: custom
+      commands:
+        - rm -rf dist-zip dist
+        - >-
+          npx -p @ui5/cli@^3.0.0 ui5 build --dest dist
+          --include-task=generateManifestBundle
+          --include-task=generateCachebusterInfo
+        - mkdir dist-zip
+        - >-
+          bash -c "cd dist && npx bestzip
+          ../dist-zip/zlProject0712MyApplicationFiori.zip *"
+      _artifactName: zlProject0712MyApplicationFiori.zip
+      supported-platforms: []
+      build-result: dist-zip
   - name: zlProject0712-db-deployer
     type: hdb
     path: gen/db
@@ -115,6 +167,18 @@ modules:
     build-parameters:
       build-result: resources
       requires:
+        - name: zlProject0712-MDKAPP
+          artifacts:
+            - MDKAPP.zip
+          target-path: resources
+        - name: zlProject0712-zlProject0712.FioriApp
+          artifacts:
+            - zlProject0712FioriApp.zip
+          target-path: resources
+        - name: zlProject0712-zlProject0712.MyApplicationFiori
+          artifacts:
+            - zlProject0712MyApplicationFiori.zip
+          target-path: resources
         - name: zlProject0712-launchpad
           artifacts:
             - launchpad.zip

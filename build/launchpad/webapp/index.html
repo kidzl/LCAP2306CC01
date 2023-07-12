@@ -28,7 +28,7 @@
                     return Controller.extend("PreviewController", {
                         onInit: function () {
 
-                            const data = {"Services":[{"ServiceName":"zlProject0712Service","DetailsURL":"./service/zlProject0712/","Metadata":"./service/zlProject0712/$metadata","Entities":[],"EntitiesCount":0}]}
+                            const data = {"Services":[{"ServiceName":"zlProject0712Service","DetailsURL":"./service/zlProject0712/","Metadata":"./service/zlProject0712/$metadata","Entities":[{"Name":"Contacts","URL":"./service/zlProject0712/Contacts","FioriURL":""},{"Name":"ProductSet","URL":"./service/zlProject0712/ProductSet","FioriURL":""}],"EntitiesCount":2}]}
                             this.getView().setModel(new JSONModel(data));
                         }
                     });

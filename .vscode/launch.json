@@ -13,10 +13,48 @@
       "internalConsoleOptions": "openOnSessionStart",
       "type": "pwa-node",
       "cwd": "${workspaceFolder}",
-      "preLaunchTask": "dev-project",
+      "preLaunchTask": "PreLaunchTask for Run zlProject0712-1",
       "envFile": "${workspaceFolder}/env/.env1",
       "env": {
         "run.config": "{\"handlerId\":\"lcap_run_config_handler_id\",\"runnableId\":\"{\\\"projectPath\\\":\\\"/home/user/projects/zlProject0712\\\",\\\"profileName\\\":\\\"\\\"}\"}"
+      }
+    },
+    {
+      "name": "Marketing - Contact",
+      "runtimeExecutable": "cds",
+      "request": "launch",
+      "args": [
+        "watch",
+        "--open",
+        "http://localhost:5000"
+      ],
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "type": "pwa-node",
+      "cwd": "${workspaceFolder}/",
+      "preLaunchTask": "PreLaunchTask for Marketing - Contact",
+      "envFile": "${workspaceFolder}/env/.env2",
+      "env": {
+        "run.config": "{\"handlerId\":\"lcap_run_config_handler_id\",\"runnableId\":\"{\\\"projectPath\\\":\\\"/home/user/projects/zlProject0712/\\\",\\\"profileName\\\":\\\"\\\"}\"}"
+      },
+      "postDebugTask": "stop-app-router"
+    },
+    {
+      "name": "ah1_gwsamplebasic",
+      "runtimeExecutable": "cds",
+      "request": "launch",
+      "args": [
+        "watch",
+        "--open"
+      ],
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "type": "pwa-node",
+      "cwd": "${workspaceFolder}/",
+      "preLaunchTask": "dev-project",
+      "envFile": "${workspaceFolder}/env/.env3",
+      "env": {
+        "run.config": "{\"handlerId\":\"lcap_run_config_handler_id\",\"runnableId\":\"{\\\"projectPath\\\":\\\"/home/user/projects/zlProject0712/\\\",\\\"profileName\\\":\\\"\\\"}\"}"
       }
     }
   ]

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="ah1_gwsamplebasic" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="BusinessPartnerSet" EntityType="ah1_gwsamplebasic.BusinessPartnerSet">
+                    <NavigationPropertyBinding Path="ToSalesOrders" Target="SalesOrderSet"/>
+                    <NavigationPropertyBinding Path="ToContacts" Target="ContactSet"/>
+                    <NavigationPropertyBinding Path="ToProducts" Target="ProductSet"/>
+                </EntitySet>
+                <EntitySet Name="ProductSet" EntityType="ah1_gwsamplebasic.ProductSet">
+                    <NavigationPropertyBinding Path="ToSupplier" Target="BusinessPartnerSet"/>
+                    <NavigationPropertyBinding Path="ToSalesOrderLineItems" Target="SalesOrderLineItemSet"/>
+                </EntitySet>
+                <EntitySet Name="SalesOrderSet" EntityType="ah1_gwsamplebasic.SalesOrderSet">
+                    <NavigationPropertyBinding Path="ToBusinessPartner" Target="BusinessPartnerSet"/>
+                    <NavigationPropertyBinding Path="ToLineItems" Target="SalesOrderLineItemSet"/>
+                </EntitySet>
+                <EntitySet Name="SalesOrderLineItemSet" EntityType="ah1_gwsamplebasic.SalesOrderLineItemSet">
+                    <NavigationPropertyBinding Path="ToHeader" Target="SalesOrderSet"/>
+                    <NavigationPropertyBinding Path="ToProduct" Target="ProductSet"/>
+                </EntitySet>
+                <EntitySet Name="ContactSet" EntityType="ah1_gwsamplebasic.ContactSet">
+                    <NavigationPropertyBinding Path="ToBusinessPartner" Target="BusinessPartnerSet"/>
+                </EntitySet>
+                <EntitySet Name="VH_SexSet" EntityType="ah1_gwsamplebasic.VH_SexSet"/>
+                <EntitySet Name="VH_CountrySet" EntityType="ah1_gwsamplebasic.VH_CountrySet"/>
+                <EntitySet Name="VH_AddressTypeSet" EntityType="ah1_gwsamplebasic.VH_AddressTypeSet"/>
+                <EntitySet Name="VH_CategorySet" EntityType="ah1_gwsamplebasic.VH_CategorySet"/>
+                <EntitySet Name="VH_CurrencySet" EntityType="ah1_gwsamplebasic.VH_CurrencySet"/>
+                <EntitySet Name="VH_UnitQuantitySet" EntityType="ah1_gwsamplebasic.VH_UnitQuantitySet"/>
+                <EntitySet Name="VH_UnitWeightSet" EntityType="ah1_gwsamplebasic.VH_UnitWeightSet"/>
+                <EntitySet Name="VH_UnitLengthSet" EntityType="ah1_gwsamplebasic.VH_UnitLengthSet"/>
+                <EntitySet Name="VH_ProductTypeCodeSet" EntityType="ah1_gwsamplebasic.VH_ProductTypeCodeSet"/>
+                <EntitySet Name="VH_BPRoleSet" EntityType="ah1_gwsamplebasic.VH_BPRoleSet"/>
+                <EntitySet Name="VH_LanguageSet" EntityType="ah1_gwsamplebasic.VH_LanguageSet"/>
+                <ActionImport Name="RegenerateAllData" Action="ah1_gwsamplebasic.RegenerateAllData"/>
+            </EntityContainer>
+            <EntityType Name="BusinessPartnerSet">
+                <Key>
+                    <PropertyRef Name="BusinessPartnerID"/>
+                </Key>
+                <Property Name="BusinessPartnerID" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="Address" Type="ah1_gwsamplebasic.CT_Address" Nullable="false"/>
+                <Property Name="CompanyName" Type="Edm.String" MaxLength="80" Nullable="false"/>
+                <Property Name="WebAddress" Type="Edm.String"/>
+                <Property Name="EmailAddress" Type="Edm.String" MaxLength="255" Nullable="false"/>
+                <Property Name="PhoneNumber" Type="Edm.String" MaxLength="30"/>
+                <Property Name="FaxNumber" Type="Edm.String" MaxLength="30"/>
+                <Property Name="LegalForm" Type="Edm.String" MaxLength="10"/>
+                <Property Name="CurrencyCode" Type="Edm.String" MaxLength="5" Nullable="false"/>
+                <Property Name="BusinessPartnerRole" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="ChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <NavigationProperty Name="ToSalesOrders" Type="Collection(ah1_gwsamplebasic.SalesOrderSet)"/>
+                <NavigationProperty Name="ToContacts" Type="Collection(ah1_gwsamplebasic.ContactSet)"/>
+                <NavigationProperty Name="ToProducts" Type="Collection(ah1_gwsamplebasic.ProductSet)"/>
+            </EntityType>
+            <EntityType Name="ProductSet">
+                <Key>
+                    <PropertyRef Name="ProductID"/>
+                </Key>
+                <Property Name="ProductID" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="TypeCode" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="Category" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="Name" Type="Edm.String" MaxLength="255" Nullable="false"/>
+                <Property Name="NameLanguage" Type="Edm.String" MaxLength="2"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="DescriptionLanguage" Type="Edm.String" MaxLength="2"/>
+                <Property Name="SupplierID" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="SupplierName" Type="Edm.String" MaxLength="80"/>
+                <Property Name="TaxTarifCode" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="MeasureUnit" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="WeightMeasure" Type="Edm.Decimal" Scale="3" Precision="13"/>
+                <Property Name="WeightUnit" Type="Edm.String" MaxLength="3"/>
+                <Property Name="CurrencyCode" Type="Edm.String" MaxLength="5" Nullable="false"/>
+                <Property Name="Price" Type="Edm.Decimal" Scale="3" Precision="16"/>
+                <Property Name="Width" Type="Edm.Decimal" Scale="3" Precision="13"/>
+                <Property Name="Depth" Type="Edm.Decimal" Scale="3" Precision="13"/>
+                <Property Name="Height" Type="Edm.Decimal" Scale="3" Precision="13"/>
+                <Property Name="DimUnit" Type="Edm.String" MaxLength="3"/>
+                <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="ChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <NavigationProperty Name="ToSupplier" Type="ah1_gwsamplebasic.BusinessPartnerSet">
+                    <ReferentialConstraint Property="SupplierID" ReferencedProperty="BusinessPartnerID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="ToSalesOrderLineItems" Type="Collection(ah1_gwsamplebasic.SalesOrderLineItemSet)"/>
+            </EntityType>
+            <EntityType Name="SalesOrderSet">
+                <Key>
+                    <PropertyRef Name="SalesOrderID"/>
+                </Key>
+                <Property Name="SalesOrderID" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="Note" Type="Edm.String" MaxLength="255"/>
+                <Property Name="NoteLanguage" Type="Edm.String" MaxLength="2"/>
+                <Property Name="CustomerID" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="CustomerName" Type="Edm.String" MaxLength="80"/>
+                <Property Name="CurrencyCode" Type="Edm.String" MaxLength="5"/>
+                <Property Name="GrossAmount" Type="Edm.Decimal" Scale="3" Precision="16"/>
+                <Property Name="NetAmount" Type="Edm.Decimal" Scale="3" Precision="16"/>
+                <Property Name="TaxAmount" Type="Edm.Decimal" Scale="3" Precision="16"/>
+                <Property Name="LifecycleStatus" Type="Edm.String" MaxLength="1"/>
+                <Property Name="LifecycleStatusDescription" Type="Edm.String" MaxLength="60"/>
+                <Property Name="BillingStatus" Type="Edm.String" MaxLength="1"/>
+                <Property Name="BillingStatusDescription" Type="Edm.String" MaxLength="60"/>
+                <Property Name="DeliveryStatus" Type="Edm.String" MaxLength="1"/>
+                <Property Name="DeliveryStatusDescription" Type="Edm.String" MaxLength="60"/>
+                <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="ChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <NavigationProperty Name="ToBusinessPartner" Type="ah1_gwsamplebasic.BusinessPartnerSet">
+                    <ReferentialConstraint Property="CustomerID" ReferencedProperty="BusinessPartnerID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="ToLineItems" Type="Collection(ah1_gwsamplebasic.SalesOrderLineItemSet)"/>
+            </EntityType>
+            <EntityType Name="SalesOrderLineItemSet">
+                <Key>
+                    <PropertyRef Name="SalesOrderID"/>
+                    <PropertyRef Name="ItemPosition"/>
+                </Key>
+                <Property Name="SalesOrderID" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="ItemPosition" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="ProductID" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="Note" Type="Edm.String" MaxLength="255"/>
+                <Property Name="NoteLanguage" Type="Edm.String" MaxLength="2"/>
+                <Property Name="CurrencyCode" Type="Edm.String" MaxLength="5"/>
+                <Property Name="GrossAmount" Type="Edm.Decimal" Scale="3" Precision="16"/>
+                <Property Name="NetAmount" Type="Edm.Decimal" Scale="3" Precision="16"/>
+                <Property Name="TaxAmount" Type="Edm.Decimal" Scale="3" Precision="16"/>
+                <Property Name="DeliveryDate" Type="Edm.DateTimeOffset" Precision="7" Nullable="false"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Scale="3" Precision="13" Nullable="false"/>
+                <Property Name="QuantityUnit" Type="Edm.String" MaxLength="3"/>
+                <NavigationProperty Name="ToHeader" Type="ah1_gwsamplebasic.SalesOrderSet">
+                    <ReferentialConstraint Property="SalesOrderID" ReferencedProperty="SalesOrderID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="ToProduct" Type="ah1_gwsamplebasic.ProductSet">
+                    <ReferentialConstraint Property="ProductID" ReferencedProperty="ProductID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="ContactSet">
+                <Key>
+                    <PropertyRef Name="ContactGuid"/>
+                </Key>
+                <Property Name="ContactGuid" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="Address" Type="ah1_gwsamplebasic.CT_Address" Nullable="false"/>
+                <Property Name="BusinessPartnerID" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="Title" Type="Edm.String" MaxLength="10"/>
+                <Property Name="FirstName" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="MiddleName" Type="Edm.String" MaxLength="40"/>
+                <Property Name="LastName" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Nickname" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Initials" Type="Edm.String" MaxLength="10"/>
+                <Property Name="Sex" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="PhoneNumber" Type="Edm.String" MaxLength="30"/>
+                <Property Name="FaxNumber" Type="Edm.String" MaxLength="30"/>
+                <Property Name="EmailAddress" Type="Edm.String" MaxLength="255"/>
+                <Property Name="Language" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DateOfBirth" Type="Edm.DateTimeOffset" Precision="7"/>
+                <NavigationProperty Name="ToBusinessPartner" Type="ah1_gwsamplebasic.BusinessPartnerSet">
+                    <ReferentialConstraint Property="BusinessPartnerID" ReferencedProperty="BusinessPartnerID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="VH_SexSet">
+                <Key>
+                    <PropertyRef Name="Sex"/>
+                </Key>
+                <Property Name="Sex" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="Shorttext" Type="Edm.String" MaxLength="60" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="VH_CountrySet">
+                <Key>
+                    <PropertyRef Name="Land1"/>
+                </Key>
+                <Property Name="Land1" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="Landx" Type="Edm.String" MaxLength="15" Nullable="false"/>
+                <Property Name="Natio" Type="Edm.String" MaxLength="15" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="VH_AddressTypeSet">
+                <Key>
+                    <PropertyRef Name="AddressType"/>
+                </Key>
+                <Property Name="AddressType" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="Shorttext" Type="Edm.String" MaxLength="60" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="VH_CategorySet">
+                <Key>
+                    <PropertyRef Name="Category"/>
+                </Key>
+                <Property Name="Category" Type="Edm.String" MaxLength="40" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="VH_CurrencySet">
+                <Key>
+                    <PropertyRef Name="Waers"/>
+                </Key>
+                <Property Name="Waers" Type="Edm.String" MaxLength="5" Nullable="false"/>
+                <Property Name="Ltext" Type="Edm.String" MaxLength="40" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="VH_UnitQuantitySet">
+                <Key>
+                    <PropertyRef Name="Msehi"/>
+                </Key>
+                <Property Name="Msehi" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="Msehl" Type="Edm.String" MaxLength="30" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="VH_UnitWeightSet">
+                <Key>
+                    <PropertyRef Name="Msehi"/>
+                </Key>
+                <Property Name="Msehi" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="Msehl" Type="Edm.String" MaxLength="30" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="VH_UnitLengthSet">
+                <Key>
+                    <PropertyRef Name="Msehi"/>
+                </Key>
+                <Property Name="Msehi" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="Msehl" Type="Edm.String" MaxLength="30" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="VH_ProductTypeCodeSet">
+                <Key>
+                    <PropertyRef Name="TypeCode"/>
+                </Key>
+                <Property Name="TypeCode" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="Shorttext" Type="Edm.String" MaxLength="60" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="VH_BPRoleSet">
+                <Key>
+                    <PropertyRef Name="BpRole"/>
+                </Key>
+                <Property Name="BpRole" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="Shorttext" Type="Edm.String" MaxLength="60" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="VH_LanguageSet">
+                <Key>
+                    <PropertyRef Name="Spras"/>
+                </Key>
+                <Property Name="Spras" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="Sptxt" Type="Edm.String" MaxLength="16" Nullable="false"/>
+            </EntityType>
+            <ComplexType Name="CT_Address">
+                <Property Name="City" Type="Edm.String" MaxLength="40"/>
+                <Property Name="PostalCode" Type="Edm.String" MaxLength="10"/>
+                <Property Name="Street" Type="Edm.String" MaxLength="60"/>
+                <Property Name="Building" Type="Edm.String" MaxLength="10"/>
+                <Property Name="Country" Type="Edm.String" MaxLength="3"/>
+                <Property Name="AddressType" Type="Edm.String" MaxLength="2"/>
+            </ComplexType>
+            <ComplexType Name="CT_String">
+                <Property Name="String" Type="Edm.String" Nullable="false"/>
+            </ComplexType>
+            <Action Name="SalesOrder_Confirm" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="ah1_gwsamplebasic.SalesOrderSet"/>
+                <ReturnType Type="ah1_gwsamplebasic.SalesOrderSet"/>
+            </Action>
+            <Action Name="SalesOrder_Cancel" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="ah1_gwsamplebasic.SalesOrderSet"/>
+                <ReturnType Type="ah1_gwsamplebasic.SalesOrderSet"/>
+            </Action>
+            <Action Name="SalesOrder_InvoiceCreated" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="ah1_gwsamplebasic.SalesOrderSet"/>
+                <ReturnType Type="ah1_gwsamplebasic.SalesOrderSet"/>
+            </Action>
+            <Action Name="SalesOrder_GoodsIssueCreated" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="ah1_gwsamplebasic.SalesOrderSet"/>
+                <ReturnType Type="ah1_gwsamplebasic.SalesOrderSet"/>
+            </Action>
+            <Action Name="RegenerateAllData" IsBound="false">
+                <Parameter Name="NoOfSalesOrders" Type="Edm.Int32"/>
+                <ReturnType Type="ah1_gwsamplebasic.CT_String"/>
+            </Action>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

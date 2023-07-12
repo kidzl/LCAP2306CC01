@@ -1,7 +1,12 @@
 {
-  "version": "1.19.0",
+  "version": "2.0.0",
   "tasks": [
-      {
+    {
+      "type": "dpt.ptdeploy",
+      "label": "Deploy zlProject0712",
+      "taskType": "Deploy"
+    },
+    {
       "label": "npm-install",
       "type": "process",
       "command": "npm",
@@ -9,7 +14,7 @@
         "install"
       ],
       "options": {
-        "cwd": "${workspaceFolder}"
+        "cwd": "${workspaceFolder}//"
       }
     },
     {
@@ -28,7 +33,7 @@
         "npm-install"
       ],
       "options": {
-        "cwd": "${workspaceFolder}"
+        "cwd": "${workspaceFolder}//"
       }
     },
     {
@@ -39,13 +44,90 @@
         "BuildMDK"
       ],
       "options": {
+        "cwd": "${workspaceFolder}//"
+      }
+    },
+    {
+      "label": "PreLaunchTask for Run zlProject0712-1",
+      "type": "process",
+      "command": "basctl",
+      "args": [
+        "--command",
+        "PT.runner.generateLaunchPage"
+      ],
+      "dependsOn": [
+        "BuildMDK"
+      ],
+      "options": {
         "cwd": "${workspaceFolder}"
       }
     },
     {
-      "type": "dpt.ptdeploy",
-      "label": "Deploy zlProject0712",
-      "taskType": "Deploy"
+      "label": "install-app-router",
+      "type": "shell",
+      "command": "if [ ! -d node_modules ]; then npm i; fi",
+      "options": {
+        "cwd": "${workspaceFolder}//local-router"
+      }
+    },
+    {
+      "label": "start-app-router",
+      "type": "shell",
+      "command": "eval $(cat ../env/.envXsuaa)  npm start",
+      "options": {
+        "cwd": "${workspaceFolder}//local-router"
+      },
+      "dependsOn": [
+        "install-app-router"
+      ],
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "severity": "info",
+          "pattern": [
+            {
+              "regexp": ".*Application router is listening on port.*",
+              "file": 0,
+              "location": 0,
+              "message": 0
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": ".*Application router is listening on port.*"
+          }
+        }
+      ]
+    },
+    {
+      "label": "stop-app-router",
+      "type": "shell",
+      "command": "command -v lwctl >/dev/null 2>&1 && lwctl -c basic-tools kill $(lwctl -c basic-tools ps aux | grep -vE 'grep|bash' | grep 'approuter' | awk '{print $2}') || kill $(ps aux | grep -vE 'grep|bash' | grep 'approuter' | awk '{print $2}')",
+      "presentation": {
+        "echo": true,
+        "reveal": "never",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false
+      }
+    },
+    {
+      "label": "PreLaunchTask for Marketing - Contact",
+      "type": "process",
+      "command": "basctl",
+      "args": [
+        "--command",
+        "PT.runner.generateLaunchPage"
+      ],
+      "dependsOn": [
+        "BuildMDK",
+        "start-app-router"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
     }
   ]
 }

@@ -1,0 +1,67 @@
+{
+	"Credential": "cf",
+	"Template": {
+		"Id": "@ext-mdkvsc-npm-dev/generator-mdk",
+		"Name": "List Detail",
+		"Version": "0.0.1"
+	},
+	"CF": {
+		"Target": "",
+		"Organization": "",
+		"Space": "",
+		"Deploy": {
+			"Description": "My SAP application",
+			"WebClient": {
+				"Runtime": "preview",
+				"URL": ""
+			},
+			"Destination": [
+				{
+					"CF": "zlProject0712-app-srv",
+					"MDK": "../service/zlProject0712/",
+					"URL": ""
+				}
+			]
+		}
+	},
+	"MobileService": {
+		"Type": "standard",
+		"AdminAPI": "",
+		"AppId": "lcap.zlProject0712.MDKAPP",
+		"Destination": []
+	},
+	"Onboarding": {
+		"Schema": "sapmobilesvcs",
+		"TimeZone": "UTC",
+		"URL": ""
+	},
+	"LCAP": {
+		"FullName": "zlProject0712_MDKAPP",
+		"Service": [
+			{
+				"mdk": "MDKAPP/Services/service1.service",
+				"cap": {
+					"name": "zlProject0712Service",
+					"sourcePath": "srv/service.cds",
+					"path": "/service/zlProject0712/",
+					"entryPath": "/service/zlProject0712",
+					"destination": "zlProject0712-app-srv",
+					"value": "1"
+				},
+				"links": [
+					{
+						"entity": "zlProject0712Service.Contacts",
+						"files": [
+							"MDKAPP/Pages/Contacts/Contacts_Detail.page",
+							"MDKAPP/Pages/Contacts/Contacts_List.page"
+						]
+					}
+				]
+			}
+		],
+		"sourceTemplate": {
+			"id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
+			"version": "1.40.12"
+		}
+	}
+}
